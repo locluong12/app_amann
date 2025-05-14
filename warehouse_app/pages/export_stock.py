@@ -214,13 +214,13 @@ def show_export_stock():
         machine_selected = st.selectbox("🖥️ Chọn máy", sorted(machine_data['machine_name'].unique()))
         pos_options = machine_data[machine_data['machine_name'] == machine_selected]['mc_pos'].tolist()
         pos_selected = st.selectbox("📍 Chọn vị trí máy", pos_options)
-    
+
         mc_pos_row = machine_data[(machine_data['machine_name'] == machine_selected) & (machine_data['mc_pos'] == pos_selected)]
         if not mc_pos_row.empty:
             mc_pos_id = mc_pos_row.iloc[0]['mc_pos_id']  # Gán giá trị mc_pos_id nếu có vị trí máy được chọn
     else:
         st.warning("⚠️ Không có dữ liệu máy.")
-    
+
     # Đảm bảo mc_pos_id có giá trị trước khi sử dụng
     if mc_pos_id is None:
         st.warning("⚠️ Vui lòng chọn máy và vị trí máy để tiếp tục!")
