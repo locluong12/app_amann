@@ -10,11 +10,11 @@ def get_engine():
         )
         # Kiểm tra kết nối (nếu có thể)
         with engine.connect() as conn:
-            print("Kết nối thành công")
+            st.success("Kết nối thành công với cơ sở dữ liệu!")
         return engine
     except Exception as e:
-        # Nếu có lỗi xảy ra, in ra lỗi và trả về None
-        print(f"Lỗi kết nối: {e}")
+        # Nếu có lỗi xảy ra, hiển thị lỗi và trả về None
+        st.error(f"Lỗi kết nối: {e}")
         return None
 
 # Lấy engine và kiểm tra
@@ -22,8 +22,14 @@ engine = get_engine()
 
 # Kiểm tra nếu engine hợp lệ trước khi sử dụng
 if engine:
-    with engine.begin() as conn:
-        # Thực hiện các thao tác với cơ sở dữ liệu
-        print("Đang thực hiện thao tác với cơ sở dữ liệu")
+    try:
+        with engine.begin() as conn:
+            # Thực hiện các thao tác với cơ sở dữ liệu
+            st.write("Đang thực hiện thao tác với cơ sở dữ liệu...")
+            # Bạn có thể thực hiện các truy vấn SQL tại đây, ví dụ:
+            # result = conn.execute("SELECT * FROM table_name")
+            # st.write(result.fetchall())
+    except Exception as e:
+        st.error(f"Lỗi khi thực hiện thao tác với cơ sở dữ liệu: {e}")
 else:
-    print("Không thể kết nối với cơ sở dữ liệu")
+    st.error("Không thể kết nối với cơ sở dữ liệu")
